@@ -32,7 +32,8 @@ useEffect(() => {
 
                   // const {data}=await carsServ.getAll()
                   // console.log(data);
-                  // setCars(data)
+                  // setCars(data)      // те саме що і нижче
+
                   await carsServ.getAll().then(value => value.data).then(value => setCars(value))
 
               }
