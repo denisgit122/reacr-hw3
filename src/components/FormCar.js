@@ -3,6 +3,7 @@ import {joiResolver} from "@hookform/resolvers/joi";
 import {carJoi} from "../Validator/joi";
 import {carsServ} from "../service";
 import {useEffect} from "react";
+import {prefs} from "joi";
 
 const FormCar = ({setCars,data,setData}) => {
 
@@ -22,13 +23,19 @@ useEffect(() => {
 },[data])
 
   const submit = async (ca) => {
+
       if (data){
-          const res=await carsServ.updateId(data.id,ca)
-              .then(value => value.data)
-              .then(value => setData(value))
 
-          console.log(res);
+              const res= await carsServ.updateId(data.id,ca).then(value => value.data)
 
+              if (Object.keys(res).length){//якщо обєкт має ключі ()він не пустий
+
+                  // const {data}=await carsServ.getAll()
+                  // console.log(data);
+                  // setCars(data)
+                  await carsServ.getAll().then(value => value.data).then(value => setCars(value))
+
+              }
 
       }
       else {

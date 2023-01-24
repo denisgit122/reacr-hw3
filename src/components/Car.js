@@ -1,15 +1,25 @@
 import {carsServ} from "../service";
 import {useEffect} from "react";
 
-const Car = ({car,setData,setCar}) => {
+const Car = ({cars,car,setData,setCar}) => {
     const {brand,price,year}=car
 
 
-        const del = async (id) => {
-            console.log(id);
-            await carsServ.delete(id)
+    const del = async (id) => {
+           console.log(id);
+           const index=cars.findIndex(value => value.id===id)
+        console.log(index);
+        await carsServ.delete(id)
+            const slice=cars.slice(0,index)
+        const sliceTwo=cars.slice(index+1)
+        const sliceFin=[...slice, ...sliceTwo]
+        // console.log(sliceTwo);
+        console.log(sliceFin);
 
-        }
+        setCar(sliceFin)
+        // console.log(cars);
+
+    }
 
 
 
