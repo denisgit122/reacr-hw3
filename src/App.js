@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+
+import {Cars} from "./components/Cars";
+import {FormCar} from "./components/FormCar";
+import {useEffect, useState} from "react";
+import {carsServ} from "./service";
 
 function App() {
-  return (
+    const [cars,setCars]= useState([])
+    const [data,setData]=useState(null)
+    console.log(data);
+
+    useEffect(() => {
+        carsServ.getAll().then(value => value.data).then(value => setCars([...value]));
+    },[])
+
+    // console.log(cars);
+
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <FormCar setCars={setCars} data={data} setData={setData}/>
+        <hr/>
+      <Cars cars={cars} setData={setData} setCar={setCars} />
     </div>
   );
 }
